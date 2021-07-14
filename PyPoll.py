@@ -17,7 +17,7 @@ file_to_load = os.path.join("Resources", "election_results.csv")
 with open(file_to_load) as election_data:
 
 # To do: perform analysis.
-    print(election_data)
+   print(election_data)
 
 # Close the file.
 election_data.close()
@@ -26,4 +26,22 @@ election_data.close()
 file_to_save = os.path.join("analysis", "election_analysis.txt")
 
 # Using the open() function with the "w" mode we will write data to the file.
-open(file_to_save, "w")
+#open(file_to_save, "w")
+
+# Using the with statement open the file as a text file.
+#outfile = open(file_to_save, "w")
+with open(file_to_save, "w") as txt_file:
+
+# Write some data to the file.
+#outfile.write("Hello World")
+
+    # Write three counties to the file.
+    # txt_file.write("Arapahoe, ")
+    # txt_file.write("Denver ," )
+    # txt_file.write("Jefferson")
+    txt_file.write("Counties in the Election\n------------------------")
+    txt_file.write("\nArapahoe\nDenver\nJefferson")
+
+# Close the file
+#outfile.close()
+txt_file.close()
