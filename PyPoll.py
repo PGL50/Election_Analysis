@@ -16,8 +16,20 @@ file_to_load = os.path.join("Resources", "election_results.csv")
 #election_data = open(file_to_load, 'r')
 with open(file_to_load) as election_data:
 
+    # To do: read and analyze the data here.
+    # Read the file object with the reader function.
+    file_reader = csv.reader(election_data)
+
+    # Print each row in the CSV file.
+    #for row in file_reader:
+    #    print(row)
+
+    # Print the header row.
+    headers = next(file_reader)
+    print(headers)
+
 # To do: perform analysis.
-   print(election_data)
+ #   print(election_data)
 
 # Close the file.
 election_data.close()
