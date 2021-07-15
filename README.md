@@ -1,8 +1,8 @@
-# Election_Analysis
+# PyPoll with Python
 
 ## Overview of the Election Audit
 
-### A Colorado Board of Elections employee has requested an election audit of a recent congressional election. The election results were from 3 counties and 3 candidates with more than 379,000 votes recorded.
+### A Colorado Board of Elections employee has requested an election audit of a recent congressional election. The election results were from three counties and three candidates with almost 379,000 votes recorded. The winner of the election as well as the county with the greatest voter turnout was collected.
 
 ## Election Audit Results
 
@@ -102,4 +102,20 @@ All results were printed to the terminal as well as saved in the election_analys
 
 ## Election Audit Summary
 
-####
+### These anlyses gave a nice summary of the three counties and candidates. Without any any adjustment to the code, a complete list of all counties and many more candidates could be perfomed. The layout of the csv file would then include rows with ballot IDs for more counties and candidates voted for in those counties. The printed and outputed code would have more rows of county level votes and percentages. The Turnout winner would be calculated and displayed in the same way. A new list of more candidates and their corresponding votes and percentages would be a longer table, but the winning candidate results would be in the same format. 
+` `  
+### There are opportunities to expand the code for future election audit needs. A column of party affiliation could be added to the CSV file if the Board of Elections wanted data on final results by party affiliation. Instead of county, the new list element would be party. It would be indexed with a 3 indicating its location in the new 4th column for party. The same syntax for winning candidate could be used to collect the unique party names and calculate the total votes and percentages.
+
+```python
+party_options = []
+party_votes = {}
+
+    # For each row in the CSV file.
+    for row in reader:
+
+        # 3: Extract the county name from each row.
+        party_name = row[3]
+```
+` `  
+### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county. So now let's include a new column to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county.
+#### GIS 
