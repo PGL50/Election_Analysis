@@ -146,21 +146,20 @@ regvote_voters = {}
             # 4c: Begin tracking the county's registered voters.
             regvote_voters[county_name] = county_regvoters
 ```
-### Then loop through the dictionary of registered voters by county to get the new county level percent turnout.
+### Now loop through the dictionary of registered voters by county to get the new county level percent turnout.
 ```python
     # 6a: Write a for loop to get the county from the county dictionary.
-    for county_name in county_votes:
+    for county_name in regvote_voters:
 
-        # 6b: Retrieve the county vote count.
-        cvotes = county_votes.get(county_name)
+        # 6b: Retrieve the county reg voter count.
+        voters = regvote_voters.get(county_name)
 
-        # 6c: Calculate the percentage of votes for the county.
-        cvote_percentage = float(cvotes) / float(total_votes) * 100
+        # 6c: Calculate the percentage of registered votes for the county.
+        voter_percentage = float(voters) / float(county_regvoters) * 100
 
          # 6d: Print the county results to the terminal.
-        county_results_forterminal = (f"{county_name}: {cvote_percentage:.1f}% ({cvotes:,})")
-        county_results_fortxt = (f"{county_name}: {cvote_percentage:.1f}% ({cvotes:,})\n")
-        print(county_results_forterminal)
+        voters_results = (f"{county_name}: {voter_percentage:.1f}% ({voters:,})")
+        print(voters_results)
 ```
 
 
