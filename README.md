@@ -117,5 +117,37 @@ party_votes = {}
         party_name = row[3]
 ```
 ` `  
-### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county. So now let's include a new column to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county.
+### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county and not out of the total for the state. So now let's include a new column to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county. So the code would have to be modified to add a key and value to the new reg_voters dictionary. I think the code below may do this (or else it's close).
+
+```python
+# 1: Create a county list and county votes dictionary.
+regvote_options = []
+regvote_voters = {}
+
+    # For each row in the CSV file.
+    for row in reader:
+
+        # 3: Extract the county voters from each row.
+        county_regvoters = row[4]
+
+    # For each row in the CSV file.
+    for row in reader:
+
+        # 3: Extract the county name from each row.
+        county_name = row[1]
+
+        # 4a: Write an if statement that checks that the
+        # county does not match any existing county in the county list.
+        if county_name not in county_options:
+
+            # 4b: Add the existing county to the list of counties.
+            regvote_options.append(county_name)
+
+            # 4c: Begin tracking the county's registered voters.
+            regvote_voters[county_name] = county_regvoters
+```
+        
+
+
+
 #### GIS 

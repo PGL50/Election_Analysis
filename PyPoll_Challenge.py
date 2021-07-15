@@ -51,7 +51,7 @@ with open(file_to_load) as election_data:
         county_name = row[1]
 
         # If the candidate does not match any existing candidate add it to
-        # the candidate list
+        # the candidate list or same for county
         if candidate_name not in candidate_options:
 
             # Add the candidate name to the candidate list.
