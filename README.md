@@ -98,13 +98,13 @@ cwinning_percentage = 0
 
 - Final election results were calculated as were the county level turnout results.
 
-All results were printed to the terminal as well as saved in the election_analysis.txt file
+All results were printed to the terminal as well as saved in the election_analysis.txt file.
 
 ## Election Audit Summary
 
-### These anlyses gave a nice summary of the three counties and candidates. Without any any adjustment to the code, a complete list of all counties and many more candidates could be perfomed. The layout of the csv file would be the same. it would then include rows with ballot IDs for more counties and candidates voted for in those counties. The printed and outputed code would have more rows of county level votes and percentages. The Turnout winner would be calculated and displayed in the same way. A new list of more candidates and their corresponding votes and percentages would be a longer table, but the winning candidate results would be in the same format. 
+### These anlyses gave a nice summary of the three counties and candidates. Without any any adjustment to the code, a complete list of all counties and many more candidates could be perfomed. The layout of the csv file would be the same. It would then include rows with ballot IDs for more counties and candidates voted for in those counties. The printed and outputed code would have more rows of county level votes and percentages. The Turnout winner would be calculated and displayed in the same way. A new list of more candidates and their corresponding votes and percentages would be a longer table, but the winning candidate results would be in the same format. 
 ` `  
-### There are opportunities to expand the code for future election audit needs. A column of party affiliation could be added to the CSV file if the Board of Elections wanted data on final results by party affiliation. Instead of county, the new list element would be party. It would be indexed with a 3 indicating its location in the new 4th column for party. The same syntax for winning candidate could be used to collect the unique party names and calculate the total votes and percentages.
+### There are opportunities to expand the code for future election audit needs. A column of party affiliation could be added to the CSV file if the Board of Elections wanted data on final results by party affiliation. Instead of county, the new list element would be party. It would be indexed with a 3 indicating its location in the new 4th column for party. The same syntax for winning candidate could be used to collect the unique party names and calculate the total votes and percentages. I added a new column to the csv file to test the code. I assigned Stockhom and Degette to Dem and Doane to Rep. Below is the modified code and the new output.
 
 ```python
 party_options = []
@@ -153,6 +153,9 @@ with open(file_to_load) as election_data:
 
     txt_file.write(winning_party_summary)
 ```
+### New party results
+![party results](./Resources/party_results.png)   
+
 ` `  
 ### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county and not out of the total for the state. So now let's include a new column to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county. So the code would have to be modified to add a key and value to the new reg_voters dictionary. I think the code below may do this (or else it's close).
 
