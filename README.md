@@ -213,7 +213,7 @@ with open(file_to_save, "w") as txt_file:
 
         txt_file.write(reg_results_fortxt)
 
-        if (cvotes > rwinning_turnout) and (rvote_percentage > rwinning_percentage):
+        if rvote_percentage > rwinning_percentage:
             rwinning_turnout = cvotes
             rwinning_county = county_name
             rwinning_percentage = rvote_percentage
