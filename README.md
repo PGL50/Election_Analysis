@@ -110,24 +110,48 @@ All results were printed to the terminal as well as saved in the election_analys
 party_options = []
 party_votes = {}
 
-    # For each row in the CSV file.
-    for row in reader:
+winning_party = ""
+pwinning_turnout= 0
+pwinning_percentage = 0
 
-        # 3: Extract the party name from each row.
+with open(file_to_load) as election_data:
+    reader = csv.reader(election_data)
+
+    header = next(reader)
+
+    for row in reader:
+        total_votes = total_votes + 1
+
         party_name = row[3]
 
-        # If the party does not match any existing party add it to
-        # the party list
         if party_name not in party_options:
-
-            # Add the partyname to the party list.
             party_options.append(party_name)
-
-            # And begin tracking that party's voter count.
             party_votes[party_name] = 0
+        party_votes[party_name] += 1
 
-        # Add a vote to that party's count
-        party_votes_votes[party_votes_name] += 1
+    for party_name in party_votes:
+        pvotes = party_votes.get(party_name)
+        pvote_percentage = float(pvotes) / float(total_votes) * 100
+
+        party_results_forterminal = (f"{party_name}: {pvote_percentage:.1f}% ({pvotes:,})")
+        party_results_fortxt = (f"{party_name}: {pvote_percentage:.1f}% ({pvotes:,})\n")
+        print(party_results_forterminal)
+
+        txt_file.write(party_results_fortxt)
+
+        if (pvotes > pwinning_turnout) and (pvote_percentage > pwinning_percentage):
+            pwinning_turnout = pvotes
+            winning_party = party_name
+            pwinning_percentage = pvote_percentage
+
+    # 7: Print the county with the largest turnout to the terminal.
+    winning_party_summary = (
+        f"\n-----------------------------\n"
+        f"Largest Party Turnout: {winning_party}\n"
+        f"-----------------------------\n")
+    print(winning_party_summary)
+
+    txt_file.write(winning_party_summary)
 ```
 ` `  
 ### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county and not out of the total for the state. So now let's include a new column to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county. So the code would have to be modified to add a key and value to the new reg_voters dictionary. I think the code below may do this (or else it's close).
