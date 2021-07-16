@@ -111,6 +111,7 @@ All results were printed to the terminal as well as saved in the election_analys
 ### New code for party level results
 
 ```python
+# Replace candidate with party for these lines of code
 party_options = []
 party_votes = {}
 
@@ -126,12 +127,12 @@ with open(file_to_load) as election_data:
     for row in reader:
         total_votes = total_votes + 1
 
-        party_name = row[3]
+        party_name = row[3]   # New column of party affiliation
 
         if party_name not in party_options:
             party_options.append(party_name)
             party_votes[party_name] = 0
-        party_votes[party_name] += 1
+        party_votes[party_name] += 1   # Count the votes by party
 
     for party_name in party_votes:
         pvotes = party_votes.get(party_name)
@@ -148,7 +149,7 @@ with open(file_to_load) as election_data:
             winning_party = party_name
             pwinning_percentage = pvote_percentage
 
-    # 7: Print the county with the largest turnout to the terminal.
+    # 7: Print the party with the winning percentage.
     winning_party_summary = (
         f"\n-----------------------------\n"
         f"Largest Party Turnout: {winning_party}\n"
