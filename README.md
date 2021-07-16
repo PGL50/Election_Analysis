@@ -157,51 +157,67 @@ with open(file_to_load) as election_data:
 ![party results](./Resources/party_results.png)   
 
 ` `  
-### An expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county and not out of the total for the state. So in order to perfomr this analysis a new column would be added to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county. So the code would have to be modified to add a key and value to the new reg_voters dictionary. I think the code below may do this (or else it's close).
+### Another expanded election audit could include the number registered voters for each of the counties. Currently the voter turnout is based on the percent of total votes. In this case the county with the largest population would always have the highest "turnout" (e.g. Hennepin county will always have the largest number of votes out of the total votes in MN). Ideally, it should be calculated based on the number of registered voters in each county and not out of the total for the state. So in order to perform this analysis a new column would be added to the CSV file (indexed at 4 now) that has number of registered voters in each county. Again, as with county there will be lots of duplicate values per county. So the code would have to be modified to add a key and value to the new reg_voters dictionary. I think the code below may do this (or else it's close). I added the new column with number of registered voters in each county to test the new code. This additional code below is just to calculate the percent of voter turnout by county registered voters. I removed the other code to make a smaller program for testing.
 
 ```python
-# 1: Create a county list and county votes dictionary.
-regvote_options = []
-regvote_voters = {}
+#Registered voter list and dictionary
+reg_options = []
+reg_votes = {}
 
-    # For each row in the CSV file.
+#Initialize the results output
+rwinning_county = ""
+rwinning_turnout= 0
+rwinning_percentage = 0
+
+# Read the csv and convert it into a list of dictionaries
+with open(file_to_load) as election_data:
+    reader = csv.reader(election_data)
+
+    header = next(reader)
+
     for row in reader:
 
-        # 3: Extract the county voters from each row.
-        county_regvoters = row[4]
-
-    # For each row in the CSV file.
-    for row in reader:
-
-        # 3: Extract the county name from each row.
         county_name = row[1]
 
-        # 4a: Write an if statement that checks that the
-        # county does not match any existing county in the county list.
+# Registered voters is in the 4th new column
+        reg_num = int(row[4])
+
+# Loop throught the rows. As a new county name is encountered the name is added to the list. 
         if county_name not in county_options:
+            county_options.append(county_name)
+            reg_options.append(county_name)
+            reg_votes[county_name] = reg_num # Get registered voters per county
+            county_votes[county_name] = 0
+        county_votes[county_name] += 1  # Some county votes
 
-            # 4b: Add the existing county to the list of counties.
-            regvote_options.append(county_name)
+# Save the results to our text file.
+with open(file_to_save, "w") as txt_file:
 
-            # 4c: Begin tracking the county's registered voters.
-            regvote_voters[county_name] = county_regvoters
+    for county_name in reg_votes:
+        cvotes = county_votes.get(county_name)
+        rtotal_votes = reg_votes.get(county_name)
+        rvote_percentage = float(cvotes) / float(rtotal_votes) * 100 # Percentage is out of county level voters. Not the total voters.
+        print(f"{county_name}: Total votes: {cvotes:,} -- Registered voters: {rtotal_votes:,} -- Turnout: {rvote_percentage:.1f}%")
+
+        reg_results_fortxt = (f"{county_name}: Total votes: {cvotes:,} -- Registered voters: {rtotal_votes:,} -- Turnout: {rvote_percentage:.1f}%\n")
+
+        txt_file.write(reg_results_fortxt)
+
+        if (cvotes > rwinning_turnout) and (rvote_percentage > rwinning_percentage):
+            rwinning_turnout = cvotes
+            rwinning_county = county_name
+            rwinning_percentage = rvote_percentage
+
+    # 7: Print the county with the largest turnout out of registered voters to the terminal.
+    rwinning_county_summary = (
+        f"\n------------------------------------------\n"
+        f"Largest County Turnout for Registered Voters: {rwinning_county}\n"
+        f"-------------------------------------------\n")
+    print(rwinning_county_summary)
+
+    txt_file.write(rwinning_county_summary)
+
+
 ```
-### Now loop through the dictionary of registered voters by county to get the new county level percent turnout.
-```python
-    # 6a: Write a for loop to get the county from the county dictionary.
-    for county_name in regvote_voters:
-
-        # 6b: Retrieve the county reg voter count.
-        voters = regvote_voters.get(county_name)
-
-        # 6c: Calculate the percentage of registered votes for the county.
-        voter_percentage = float(voters) / float(county_regvoters) * 100
-
-         # 6d: Print the county results to the terminal.
-        voters_results = (f"{county_name}: {voter_percentage:.1f}% ({voters:,})")
-        print(voters_results)
-```
-
-
-
-#### GIS 
+### New voter turnout by county level registered voters. So from these results, Arapahoe County had the largest voter turnout based on registered voters within the county. Denver county showed largest turnout based on the total votes cast. So for future Board of Elections audits, they need to account for county level turnout not based on state totals.
+![voter turnout results](./Resources/Largest_turnout_registered.png)  
