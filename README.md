@@ -6,6 +6,9 @@
 
 ## Election Audit Results
 
+### Here is a table of the complete results:
+![total](./Resources/complete_results.png) 
+
 - Total vote count 
 
     ![total](./Resources/total_votes.png) 
