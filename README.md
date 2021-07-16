@@ -189,7 +189,7 @@ with open(file_to_load) as election_data:
 
         county_name = row[1]
 
-# Registered voters is in the 4th new column
+# Registered voters is in the 5th new column
         reg_num = int(row[4])
 
 # Loop throught the rows. As a new county name is encountered the name is added to the list. 
