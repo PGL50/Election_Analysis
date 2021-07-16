@@ -198,7 +198,7 @@ with open(file_to_load) as election_data:
             reg_options.append(county_name)
             reg_votes[county_name] = reg_num # Get registered voters per county
             county_votes[county_name] = 0
-        county_votes[county_name] += 1  # Some county votes
+        county_votes[county_name] += 1  # Sum county votes
 
 # Save the results to our text file.
 with open(file_to_save, "w") as txt_file:
